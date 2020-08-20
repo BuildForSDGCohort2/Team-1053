@@ -1,0 +1,22 @@
+# testing
+/coverage
+.coverage
+
+# development environment
+env-backend
+
+# misc
+.env.local
+.env.development
+.env.test
+.env.production
+
+
+# IDE - VSCode
+.vscode
+
+# System Files
+.DS_Store
+db.sqlite3
+common.txt
+*__pycache__
