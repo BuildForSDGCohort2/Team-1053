@@ -3,6 +3,7 @@
 
 > This is the code for the backend API built with Python Django Rest Framework
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2ad0f5ded2d14afa86e80e2837865754)](https://app.codacy.com/gh/BuildForSDGCohort2/Team-1053-backend?utm_source=github.com&utm_medium=referral&utm_content=BuildForSDGCohort2/Team-1053-backend&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)](https://travis-ci.org/badges/badgerbadgerbadger) [![Dependency Status](http://img.shields.io/gemnasium/badges/badgerbadgerbadger.svg?style=flat-square)](https://gemnasium.com/badges/badgerbadgerbadger) [![Coverage Status](http://img.shields.io/coveralls/badges/badgerbadgerbadger.svg?style=flat-square)](https://coveralls.io/r/badges/badgerbadgerbadger) 
 
 ## Table of Contents
