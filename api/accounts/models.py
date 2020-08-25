@@ -22,7 +22,9 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    profile_pic = models.ImageField(null=True, blank=True)
+    profile_pic = models.ImageField(
+        default="default.png", null=True, blank=True
+    )
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
 

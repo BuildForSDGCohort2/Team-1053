@@ -1,0 +1,30 @@
+language: python
+python:
+  - "3.6"
+env:
+  global:
+    - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)
+    - DJANGO=1.11.* DRF=3.7.*
+    - DJANGO=1.11.* DRF=3.8.*
+    - DJANGO=2.0.* DRF=3.*
+    - DJANGO=2.0.* DRF=3.8.*
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+install:
+  - pip install coveralls
+  - pip install
+script:
+  - coverage run manage.py test
+after_success:
+  - coveralls
+after_script:
+  - coverage xml
+  - if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
+
+matrix:
+  exclude:
+    - python: "2.7"
+      env: DJANGO=2.0.* DRF=3.7.*
+    - python: "2.7"
+      env: DJANGO=2.0.* DRF=3.8.*

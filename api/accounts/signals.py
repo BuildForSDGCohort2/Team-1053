@@ -8,18 +8,15 @@ from .models import User, Customer
 def create_customer(sender, instance, created, **kwargs):
     if created:
         group = Group.objects.get_or_create(name='customer')
-        print(group[0])
-        # instance.groups.add(group)
+        instance.groups.add(group[0])
 
         Customer.objects.create(
             user=instance,
             name=instance.username
         )
-        print('customer created')
 
 
 @receiver(post_save, sender=User)
 def update_customer(sender, instance, created, **kwargs):
     if created is False:
         instance.customer.save()
-        print('customer updated')
