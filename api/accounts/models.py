@@ -10,6 +10,9 @@ class User(AbstractUser):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
+        """
+        Returns string representation of user object
+        """
         return f'{self.username}'
 
 
