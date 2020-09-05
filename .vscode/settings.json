@@ -1,0 +1,12 @@
+{
+    "cSpell.words": [
+        "cloudsql",
+        "entrypoint",
+        "gunicorn",
+        "noqa",
+        "postgres",
+        "sqlite",
+        "uidb",
+        "wsgi"
+    ]
+}
