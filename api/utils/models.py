@@ -1,10 +1,10 @@
 from django.db import models
 
 
-class TimeStamps(object):
+class TimeStamps(models.Model):
     """docstring for TimeStamps."""
-    created_at = models.DateField(auto_now_add=True)
-    updated_at = models.DateField(auto_now_add=True)
+    date_created = models.DateField(auto_now_add=True)
+    date_updated = models.DateField(auto_now_add=True)
 
     class Meta:
         abstract = True

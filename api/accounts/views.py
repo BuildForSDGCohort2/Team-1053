@@ -1,7 +1,7 @@
-from .models import User
+from .models import Customer, User
 from rest_framework import viewsets
 # from rest_framework import permissions
-from .serializers import UserSerializer
+from .serializers import CustomerSerializer, UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -11,3 +11,11 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     # permission_classes = [permissions.IsAuthenticated]
+
+
+class CustomerViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows customers to be viewed or edited.
+    """
+    queryset = Customer.objects.all().order_by('-created_at')
+    serializer_class = CustomerSerializer

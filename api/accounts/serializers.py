@@ -1,13 +1,7 @@
 from rest_framework import serializers
 from allauth.account.adapter import get_adapter
 from rest_auth.registration.serializers import RegisterSerializer
-from .models import User
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'groups']
+from .models import User, Customer
 
 
 class UserRegisterSerializer(RegisterSerializer):
@@ -23,10 +17,8 @@ class UserRegisterSerializer(RegisterSerializer):
             'password1': self.validated_data.get('password1', ''),
             'password2': self.validated_data.get('password2', ''),
             'email': self.validated_data.get('email', ''),
-            'first_name': self.validated_data.get('first_name', ''),
-            'last_name': self.validated_data.get('last_name', ''),
-            'phone': self.validated_data.get('mobile', ''),
-            'is_admin': self.validated_data.get('is_admin', '')
+            'is_admin': self.validated_data.get('is_admin', ''),
+
         }
 
     def save(self, request):
@@ -37,3 +29,15 @@ class UserRegisterSerializer(RegisterSerializer):
         user.save()
         adapter.save_user(request, user, self)
         return user
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
+class CustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = '__all__'

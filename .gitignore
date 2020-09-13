@@ -19,4 +19,5 @@ env-backend
 .DS_Store
 db.sqlite3
 common.txt
+app.yaml
 *__pycache__
