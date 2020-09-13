@@ -1,0 +1,78 @@
+Sales Logistics:
+    Delivery from Warehouse to Wholesalers, Retailers, and Consumers
+Distribution logisticians essentially pursue three goals:
+GOALS:
+    1. Availability: ensure that a sufficient quantity of products is available to customers. Customers should be able to receive goods promptly and without great effort.
+    2. Cost minimization: The aim is to reduce costs associated with transport, storage, shortage and order processing. At the same time, however, delivery is to become faster, more energy-efficient and more environmentally friendly.
+    3. Influence: Distribution logisticians want to have the highest possible say in the marketing of their products, for instance. It is about answering the questions of “How are my products placed on the sales shelf?” and “How can I stand out from the competition with the presentation of my goods?”.
+FLOW:
+Place an order, process order, bill and send, make payment and deliver, track delicery. confirm delivery.
+
+Install packages-backend
+pip install django djangorestframework django-filter django-oauth-toolkit 
+Install packages-frontend
+npm install react-router react-router-dom jest cypress axios
+
+todo
+set up users
+set up postgres
+
+Orders:
+    -customer(foreignKey, null=True, on_delete=models.SET_NULL)
+    -product(foreignKey, null=True, on_delete=models.SET_NULL)
+    -Basic:crud
+    -Save, send, download
+    -Status:
+        -Delivered
+        -To be dispatched
+        -In transit
+        -Problems
+Invoicing:
+    -printing of invoices
+    -Invoice Reports
+    -Predefined customer rates based on the route, commodity and defined parameters
+    -Proper notifications on pending invoice approvals
+    -calculation and issuance of storage rental fees.
+
+Driver:
+    -name
+    -phone
+    --asing order tp driver for delivery
+Customer:
+    -Make order
+    -Email notifications for order events
+    -Order History
+Tracking:
+    -Online track and trace
+
+Delivery Scheduling: 
+    The Delivery Scheduling module enables you to plan the delivery of goods to customers by assigning distribution routes and delivery dates to sales orders. You can use an automatic scheduling mechanism, or schedule deliveries manually.
+
+Product:
+    -code
+    -name
+    -price
+
+FRONTEND:
+burner
+products
+our services
+about us
+
+ STOCK_CATEGORY = (
+        ('Clothing', 'Clothing'),
+        ('Furniture', 'Furniture'),
+        ('Electronics', 'Electronics'),
+        ('Grocery', 'Grocery'),
+        ('Health & Beauty', 'Health & Beauty'),
+        ('Baby Products', 'Baby Products'),
+        ('Stationery', 'Stationery'),
+        ('Kitchen', 'Kitchen'),
+    )
+
+From Yehia Abdulhamid to Everyone: (9:57 PM)
+http://yehiaabdulhamid.com/
+From Yehia Abdulhamid to Everyone: (10:51 PM)
+https://stackoverflow.com/questions/28135435/how-can-i-include-volume-data-in-docker-imagehttps://docs.docker.com/engine/reference/builder/#volume
+From Yehia Abdulhamid to Everyone: (11:32 PM)
+https://www.scalyr.com/blog/create-docker-image/

@@ -1,0 +1,15 @@
+runtime: python
+env: flex
+entrypoint: gunicorn -b :$PORT config.wsgi
+
+runtime_config:
+  python_version: 3
+
+env_variables:
+  DB_NAME: 'logistics'
+  DB_USERNAME: 'postgres'
+  DB_PASSWORD: 'postgres'
+  DB_HOST: '/cloudsql/project-id:us-central1:db-instance-name'
+
+beta_settings:
+  cloud_sql_instances: project-id:us-central1:db-instance-name'

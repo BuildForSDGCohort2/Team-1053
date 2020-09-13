@@ -16,8 +16,7 @@ class UserRegisterSerializer(RegisterSerializer):
             'username': self.validated_data.get('username', ''),
             'password1': self.validated_data.get('password1', ''),
             'password2': self.validated_data.get('password2', ''),
-            'email': self.validated_data.get('email', ''),
-            'is_admin': self.validated_data.get('is_admin', ''),
+            'email': self.validated_data.get('email', '')
 
         }
 
@@ -25,7 +24,6 @@ class UserRegisterSerializer(RegisterSerializer):
         adapter = get_adapter()
         user = adapter.new_user(request)
         self.cleaned_data = self.get_cleaned_data()
-        user.is_admin = self.cleaned_data.get('is_admin')
         user.save()
         adapter.save_user(request, user, self)
         return user
