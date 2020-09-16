@@ -4,6 +4,15 @@ from api.accounts.models import Customer
 from simple_history.models import HistoricalRecords
 
 
+class OrderItem(models.Model):
+    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+    quantity = models.IntegerField(null=True)
+    history = HistoricalRecords()
+
+    def __str__(self):
+        return str(self.id)
+
+
 class Order(models.Model):
     STATUS = (
         ('New', 'New'),
@@ -12,7 +21,7 @@ class Order(models.Model):
         ('Canceled', 'Canceled'),
         ('Abandoned Cart', 'Abandoned Cart'),
     )
-    code = models.CharField(max_length=200, null=True)
+    order_id = models.CharField(max_length=200, null=True)
     customer = models.ForeignKey(
         Customer, null=True, on_delete=models.SET_NULL
     )
@@ -20,21 +29,11 @@ class Order(models.Model):
         max_length=200, null=True, choices=STATUS, default='New'
     )
     date_created = models.DateTimeField(auto_now_add=True, null=True)
+    items = models.ManyToManyField(OrderItem)
     history = HistoricalRecords()
 
     def __str__(self):
-        return self.order.price
-
-
-class OrderItem(models.Model):
-    product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
-    product_quantity = models.IntegerField(null=True)
-    price = models.FloatField(default=0.00)
-    order = models.ManyToManyField(Order)
-    history = HistoricalRecords()
-
-    def __str__(self):
-        return self.product.name
+        return f'{self.status}'
 
 
 class Tracking(models.Model):
@@ -45,7 +44,7 @@ class Tracking(models.Model):
         ('Delivered', 'Delivered'),
     )
     tracking_number = models.CharField(max_length=200, null=True)
-    order = models.ForeignKey(
+    order = models.OneToOneField(
         Order, null=True, on_delete=models.CASCADE
     )
     status = models.CharField(

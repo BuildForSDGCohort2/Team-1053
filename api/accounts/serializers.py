@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from allauth.account.adapter import get_adapter
+from rest_framework.authtoken.models import Token
 from rest_auth.registration.serializers import RegisterSerializer
 from .models import User, Customer
 
@@ -39,3 +40,21 @@ class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
         fields = '__all__'
+
+
+class TokenSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Token
+        fields = ('key', 'user')
+
+    def get_user(self, obj):
+        user_data = UserSerializer(obj.user).data
+        return {
+            'id': user_data.get('id'),
+            'username': user_data.get('username'),
+            'first_name': user_data.get('first_name'),
+            'last_name': user_data.get('last_name'),
+            'last_login': user_data.get('last_login')
+        }
