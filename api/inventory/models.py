@@ -7,6 +7,9 @@ class Stock(models.Model):
     quantity = models.IntegerField(default=0)
     date_added = models.DateTimeField(auto_now_add=True, null=True)
 
+    def __str__(self):
+        return self.category
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=200, null=True)
