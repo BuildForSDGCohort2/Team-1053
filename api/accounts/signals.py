@@ -12,7 +12,7 @@ def create_customer(sender, instance, created, **kwargs):
 
         Customer.objects.create(
             user=instance,
-            name=instance.username
+            username=instance.username
         )
 
 

@@ -35,9 +35,10 @@ INSTALLED_APPS = [
     'rest_auth',
     'rest_framework.authtoken',
     'rest_auth.registration',
+    'corsheaders',
     'api.accounts.apps.AccountsConfig',
     'api.inventory',
-    'api.orders'
+    'api.orders.apps.OrdersConfig'
 ]
 
 SITE_ID = 1
@@ -45,6 +46,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -122,9 +124,12 @@ AUTHENTICATION_BACKENDS = (
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication'
     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
 SILENCED_SYSTEM_CHECKS = ["2_0.W001", "auth.W004"]
 
@@ -137,7 +142,7 @@ AUTH_USER_MODEL = 'accounts.User'
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'api.accounts.serializers.UserSerializer',
-    # 'TOKEN_SERIALIZER': 'users.serializers.TokenSerializer',
+    'TOKEN_SERIALIZER': 'api.accounts.serializers.TokenSerializer',
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {
@@ -163,3 +168,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'api', 'uploads'))
 MEDIA_URL = '/uploads/'
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+    "http://127.0.0.1:3000"
+]
