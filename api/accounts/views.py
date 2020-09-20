@@ -18,10 +18,6 @@ class UserViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
-    # def put(self, request):
-    #     file_obj = request.data['profile_pis']
-    #     print(file_obj)
-
 
 class CustomerViewSet(viewsets.ModelViewSet):
     """
