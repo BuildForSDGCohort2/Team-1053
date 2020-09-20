@@ -19,11 +19,14 @@ class Customer(models.Model):
     user = models.OneToOneField(
         User, null=True, on_delete=models.CASCADE
     )
-    name = models.CharField(max_length=255)
-    phone = models.CharField(max_length=255)
+    username = models.CharField(max_length=255, null=True)
+    mobile = models.CharField(max_length=255, default='(+254)7777422')
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    street = models.CharField(max_length=255)
+    postal_code = models.IntegerField(null=True)
     profile_pic = models.ImageField(
         default="default.png", null=True, blank=True
     )
@@ -31,4 +34,6 @@ class Customer(models.Model):
     updated_at = models.DateField(auto_now=True)
 
     def __str__(self):
-        return f'{self.name}'
+        """Return string representation of the Customer object"""
+
+        return f'{self.username}'

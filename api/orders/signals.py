@@ -11,7 +11,6 @@ def create_tracking(sender, instance, created, **kwargs):
             order=instance,
             tracking_number=instance.order_id,
             delivery_date=instance.date_created + timedelta(days=4),
-            ship_to=instance.customer
         )
 
 

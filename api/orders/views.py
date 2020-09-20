@@ -1,6 +1,9 @@
 from .models import OrderItem, Order, Tracking
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework.authentication import (
+    TokenAuthentication, BasicAuthentication
+)
+from rest_framework.permissions import IsAuthenticated
 from .serializers import (
     OrderItemSerializer,
     OrderSerializer,
@@ -14,22 +17,27 @@ class OrderItemViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows stock to be viewed or edited.
     """
-    queryset = OrderItem.objects.all().order_by('-id')
+    queryset = OrderItem.objects.filter(is_ordered=False).order_by('-id')
     serializer_class = OrderItemSerializer
-    permission_classes = [AllowAny]
+    authentication_classes = [TokenAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
 
 class OrderViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows tag to be viewed or edited.
     """
-    queryset = Order.objects.all().order_by('-date_created')
+    queryset = Order.objects.filter().order_by('-date_created')
     serializer_class = OrderSerializer
-    permission_classes = [AllowAny]
+    authentication_classes = [TokenAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
+        order_items = self.request.data.get('order_items')
         customer = Customer.objects.get(user=self.request.user)
-        serializer.save(customer=customer, order_id=generate_id())
+        serializer.save(
+            customer=customer, order_id=generate_id(), items=order_items
+        )
 
 
 class TrackingViewSet(viewsets.ModelViewSet):
@@ -38,3 +46,5 @@ class TrackingViewSet(viewsets.ModelViewSet):
     """
     queryset = Tracking.objects.all().order_by('-id')
     serializer_class = TrackingSerializer
+    authentication_classes = [TokenAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
