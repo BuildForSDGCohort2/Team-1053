@@ -56,5 +56,6 @@ class TokenSerializer(serializers.ModelSerializer):
             'username': user_data.get('username'),
             'first_name': user_data.get('first_name'),
             'last_name': user_data.get('last_name'),
+            'is_staff': user_data.get('is_staff'),
             'last_login': user_data.get('last_login')
         }

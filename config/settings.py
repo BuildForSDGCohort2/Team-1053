@@ -169,6 +169,7 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'api', 'uploads'))
 MEDIA_URL = '/uploads/'
 CORS_ALLOWED_ORIGINS = [
+    "https://saleslogistists.web.app",
     "http://localhost:4200",
     "http://127.0.0.1:3000"
 ]
