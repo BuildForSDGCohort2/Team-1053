@@ -29,7 +29,7 @@ def create_tracking(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Order)
 def update_tracking(sender, instance, created, **kwargs):
-    if created is False:
+    if not created:
         Tracking.objects.create(
             order_id=instance.order_id,
             event=instance.status,

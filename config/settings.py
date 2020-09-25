@@ -1,4 +1,5 @@
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -166,10 +168,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'api', 'uploads'))
-MEDIA_URL = '/uploads/'
-CORS_ALLOWED_ORIGINS = [
-    "https://saleslogistists.web.app",
-    "http://localhost:4200",
-    "http://127.0.0.1:3000"
-]
+MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'api', 'media'))
+MEDIA_URL = '/media/'
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+WHITENOISE_AUTOREFRESH = True
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+django_heroku.settings(locals())

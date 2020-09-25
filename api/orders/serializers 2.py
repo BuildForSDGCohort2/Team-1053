@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from .models import OrderItem, Order, Tracking
 from api.inventory.models import Product
-from api.accounts.models import Customer
-from api.accounts.serializers import CustomerSerializer
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
@@ -68,12 +66,6 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class TrackingSerializer(serializers.ModelSerializer):
-    ship_to = serializers.SerializerMethodField()
-
     class Meta:
         model = Tracking
         fields = '__all__'
-    
-    def get_ship_to(self, obj):
-        customer = Customer.objects.get(username=obj.ship_to)
-        return CustomerSerializer(customer).data

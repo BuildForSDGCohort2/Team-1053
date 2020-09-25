@@ -73,3 +73,18 @@ def order_history(request, orderId):
         return Response(
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
+
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
+def order_summary(request):
+    try:
+        queryset = Order.objects.order_by('-event_date')
+        serializer = OrderSerializer(queryset, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        print(e)
+        return Response(
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )

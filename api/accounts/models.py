@@ -28,6 +28,7 @@ class Customer(models.Model):
     street = models.CharField(max_length=255)
     postal_code = models.IntegerField(null=True)
     profile_pic = models.ImageField(
+        upload_to='customers',
         default="default.png", null=True, blank=True
     )
     created_at = models.DateField(auto_now_add=True)
