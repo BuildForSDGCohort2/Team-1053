@@ -17,7 +17,8 @@ from .serializers import (
     TrackingSerializer
 )
 from .models import Customer
-from api.utils.helpers import generate_id
+from api.utils.helpers import generate_id 
+from api.utils.order_utility import get_order_summary 
 
 
 class OrderItemViewSet(viewsets.ModelViewSet):
@@ -82,7 +83,8 @@ def order_summary(request):
     try:
         queryset = Order.objects.order_by('-event_date')
         serializer = OrderSerializer(queryset, many=True)
-        return Response(serializer.data)
+        summary_data = get_order_summary(serializer.data)
+        return Response(summary_data)
     except Exception as e:
         print(e)
         return Response(

@@ -172,6 +172,12 @@ MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'api', 'media'))
 MEDIA_URL = '/media/'
 
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:4200',
+    'http://127.0.0.1:3000',
+    'https://saleslogistists.web.app'
+]
 
 WHITENOISE_AUTOREFRESH = True
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

@@ -46,7 +46,7 @@ pytestdebug.log
 .env
 .env.local
 env/
-venv-backend/
+venv/
 
 # GCP
 app.yaml
