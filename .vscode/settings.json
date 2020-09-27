@@ -9,5 +9,6 @@
         "sqlite",
         "uidb",
         "wsgi"
-    ]
+    ],
+    "python.pythonPath": "/Users/bonifaseorwa/Documents/projects/BuildforSDG/logistics-backend/venv/bin/python3.8"
 }

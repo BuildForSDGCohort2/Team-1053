@@ -1,7 +1,6 @@
 from rest_framework.authentication import (
     TokenAuthentication, BasicAuthentication
 )
-from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import IsAuthenticated
 from .models import Customer, User
 from rest_framework import viewsets
@@ -14,7 +13,6 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    parser_classes = [FileUploadParser]
     authentication_classes = [TokenAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
