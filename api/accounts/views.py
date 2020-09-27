@@ -1,7 +1,6 @@
 from rest_framework.authentication import (
     TokenAuthentication, BasicAuthentication
 )
-from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import IsAuthenticated
 from .models import Customer, User
 from rest_framework import viewsets
@@ -26,4 +25,3 @@ class CustomerViewSet(viewsets.ModelViewSet):
     serializer_class = CustomerSerializer
     authentication_classes = [TokenAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
-    parser_classes = [FileUploadParser]

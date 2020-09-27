@@ -17,8 +17,8 @@ from .serializers import (
     TrackingSerializer
 )
 from .models import Customer
-from api.utils.helpers import generate_id 
-from api.utils.order_utility import get_order_summary 
+from api.utils.helpers import generate_id
+from api.utils.order_utility import get_order_summary
 
 
 class OrderItemViewSet(viewsets.ModelViewSet):
@@ -81,10 +81,11 @@ def order_history(request, orderId):
 @permission_classes([IsAuthenticated])
 def order_summary(request):
     try:
-        queryset = Order.objects.order_by('-event_date')
+        queryset = Order.objects.order_by('-date_created')
         serializer = OrderSerializer(queryset, many=True)
         summary_data = get_order_summary(serializer.data)
         return Response(summary_data)
+
     except Exception as e:
         print(e)
         return Response(

@@ -1,23 +1,37 @@
+import json
+
+
 def get_order_summary(data):
-    orders = len(data)
-    if orders == 0:
-        return data
-
+    all_orders = len(data)
+    data = json.loads(json.dumps(data))
     total_cost = 0
-    cancelled = 0
-    delivered = 0
+    cancelled = []
+    delivered = []
+    new = []
+    on_hold = []
+    approved = []
 
-    for order in orders:
-        total_cost += order.cost
-        if order.status == 'Cancelled':
-            cancelled += 1
-        if order.status == 'Delivered':
-            delivered += 1
-    average_cost = total_cost/orders
+    for order in data:
+        total_cost += order.get('grand_total')
+        if order.get('status') == 'Cancelled':
+            cancelled.append(order)
+        if order.get('status') == 'Delivered':
+            delivered.append(order)
+        if order.get('status') == 'New':
+            new.append(order)
+        if order.get('status') == 'On Hold':
+            on_hold.append(order)
+        if order.get('status') == 'Approved':
+            approved.append(order)
+    average_cost = total_cost/all_orders
 
     return {
         'total_cost': total_cost,
         'average_cost': average_cost,
+        'new': new,
+        'on_hold': on_hold,
+        'approved': approved,
         'cancelled': cancelled,
-        'delivered': delivered
+        'delivered': delivered,
+        'orders': all_orders
     }

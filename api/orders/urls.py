@@ -1,6 +1,6 @@
 from django.urls import include, path
 from rest_framework import routers
-from .views import OrderItemViewSet, OrderViewSet, order_history
+from .views import OrderItemViewSet, OrderViewSet, order_history, order_summary
 
 router = routers.DefaultRouter()
 router.register(r'order-items', OrderItemViewSet)
@@ -10,5 +10,6 @@ router.register(r'orders', OrderViewSet, basename='order')
 # Additionally, we include product, stock and tag URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
-    path('order-history/<orderId>', order_history, name='history')
+    path('order-history/<orderId>', order_history, name='history'),
+    path('order-summary', order_summary, name='summary')
 ]
