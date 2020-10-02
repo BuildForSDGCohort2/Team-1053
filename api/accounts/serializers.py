@@ -15,6 +15,8 @@ class UserRegisterSerializer(RegisterSerializer):
     def get_cleaned_data(self):
         return {
             'username': self.validated_data.get('username', ''),
+            'first_name': self.validated_data.get('first_name', ''),
+            'last_name': self.validated_data.get('last_name', ''),
             'password1': self.validated_data.get('password1', ''),
             'password2': self.validated_data.get('password2', ''),
             'email': self.validated_data.get('email', '')
@@ -33,10 +35,21 @@ class UserRegisterSerializer(RegisterSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = (
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'is_staff',
+            'last_login',
+            'date_joined',
+        )
 
 
 class CustomerSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
     class Meta:
         model = Customer
         fields = '__all__'
@@ -54,6 +67,7 @@ class TokenSerializer(serializers.ModelSerializer):
         return {
             'id': user_data.get('id'),
             'username': user_data.get('username'),
+            'email': user_data.get('email'),
             'first_name': user_data.get('first_name'),
             'last_name': user_data.get('last_name'),
             'is_staff': user_data.get('is_staff'),

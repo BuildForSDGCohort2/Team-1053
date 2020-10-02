@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth.registration',
     'corsheaders',
-    'api.accounts.apps.AccountsConfig',
+    'api.accounts',
     'api.inventory',
     'api.orders.apps.OrdersConfig'
 ]
