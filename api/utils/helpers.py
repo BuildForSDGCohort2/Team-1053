@@ -1,7 +1,10 @@
-import os
-import base64
+import random
+import string
 
 
 def generate_id():
-    character_id = base64.b64encode(os.urandom(6)).decode('ascii')
-    return character_id.upper()
+    """Generate unique id for the order"""
+    
+    alphabet = string.ascii_letters.upper() + string.digits
+    order_id = ''.join(random.choice(alphabet) for i in range(8))
+    return order_id
