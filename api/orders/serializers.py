@@ -1,5 +1,6 @@
 from api.accounts.models import Customer
 from api.accounts.serializers import CustomerSerializer
+from api.inventory.models import Product
 from api.utils.helpers import generate_id
 from rest_framework import serializers
 
@@ -7,18 +8,24 @@ from .models import Order, OrderItem, Tracking
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    order_id = serializers.PrimaryKeyRelatedField(
-        source='order',
-        queryset=Order.objects.all(),
-    )
+    product_detail = serializers.SerializerMethodField()
 
     class Meta:
         model = OrderItem
         fields = '__all__'
 
+    def get_product_detail(self, obj):
+        product = Product.objects.get(pk=obj.product_id)
+        return {
+            'name': product.name,
+            'price': product.price
+        }
+
 
 class OrderSerializer(serializers.ModelSerializer):
-    orderitem_set = OrderItemSerializer(many=True, required=False, read_only=True)
+    orderitem_set = OrderItemSerializer(
+        many=True, required=False, read_only=True
+    )
     order_id = serializers.CharField(allow_blank=True, required=False)
     grand_total = serializers.SerializerMethodField()
     customer_name = serializers.SerializerMethodField()
@@ -30,18 +37,17 @@ class OrderSerializer(serializers.ModelSerializer):
     def create(self, validated_data, **kwargs):
         user = self.context['request'].user
         customer = Customer.objects.get(user=user)
-        items = self.context['request'].data.get('order_item')
+        items = self.context['request'].data.get('items')
         order = Order(
             customer=customer,
             order_id=generate_id(),
             **validated_data, **kwargs
         )
         order.save()
-        print(order)
         for item in items:
-            item.pop('cost')
-            item.pop('product_name')
-            order_item = OrderItem(order=order, **item)
+            id = item.pop('product')
+            instance = Product.objects.get(id=id)
+            order_item = OrderItem(order=order, **item, product=instance)
             order_item.save()
         return order
 
@@ -52,10 +58,10 @@ class OrderSerializer(serializers.ModelSerializer):
         """
 
         total = 0
-        items = OrderItemSerializer(order.orderitem_set.all(), many=True).data
+        items = order.orderitem_set.all()
+        print(items)
         for item in items:
-            cost = item['price_per_item'] * item['quantity']
-            total += cost
+            total += item.cost
         return total
 
     def get_customer_name(self, obj):

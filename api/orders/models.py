@@ -50,13 +50,12 @@ class OrderItem(models.Model):
         Order, null=True, unique=False, on_delete=models.CASCADE
     )
     quantity = models.IntegerField(null=False, default=0)
-    price_per_item = models.IntegerField(null=False, default=0)
-    price = models.IntegerField(null=False, default=0)
+    cost = models.IntegerField(null=False, default=0)
 
     def __str__(self):
         """Return string representation of the OrderItem object"""
 
-        return str(self.price)
+        return str(self.cost)
 
 
 class Tracking(models.Model):
