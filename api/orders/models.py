@@ -1,19 +1,8 @@
-from django.db import models
-from api.inventory.models import Product
-from api.accounts.models import Customer
-
 from datetime import datetime, timedelta
 
-
-class OrderItem(models.Model):
-    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
-    quantity = models.IntegerField(null=True)
-    is_ordered = models.BooleanField(default=False)
-
-    def __str__(self):
-        """Return string representation of the OrderItem object"""
-
-        return str(self.product.name)
+from api.accounts.models import Customer
+from api.inventory.models import Product
+from django.db import models
 
 
 class Order(models.Model):
@@ -42,7 +31,6 @@ class Order(models.Model):
         max_length=200, null=True, choices=STATUS, default='New'
     )
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    order_items = models.ManyToManyField(OrderItem)
     payment_option = models.CharField(
         max_length=200, null=True,
         choices=PAYMENT_OPTIONS,
@@ -54,6 +42,20 @@ class Order(models.Model):
         """Return string representation of the order object"""
 
         return f'{self.order_id}'
+
+
+class OrderItem(models.Model):
+    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+    order = models.ForeignKey(
+        Order, null=True, unique=False, on_delete=models.CASCADE
+    )
+    quantity = models.IntegerField(null=False, default=0)
+    cost = models.IntegerField(null=False, default=0)
+
+    def __str__(self):
+        """Return string representation of the OrderItem object"""
+
+        return str(self.cost)
 
 
 class Tracking(models.Model):

@@ -1,11 +1,11 @@
-from rest_framework.authentication import (
-    TokenAuthentication, BasicAuthentication
-)
+from rest_framework import viewsets
+from rest_framework.authentication import (BasicAuthentication,
+                                           TokenAuthentication)
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+
 from .models import Customer, User
-from rest_framework import viewsets
 from .serializers import CustomerSerializer, UserSerializer
 
 
@@ -28,9 +28,6 @@ class CustomerViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
     lookup_field = 'user'
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
 
     @action(detail=True)
     def user(self, request, pk=None):
