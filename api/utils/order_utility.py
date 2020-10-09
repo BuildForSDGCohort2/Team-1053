@@ -10,9 +10,6 @@ def get_order_summary(data):
     new = []
     on_hold = []
     approved = []
-    orders = []
-    status = {}
-    
     for order in data:
         total_cost += order.get('grand_total')
         if order.get('status') == 'Cancelled':
