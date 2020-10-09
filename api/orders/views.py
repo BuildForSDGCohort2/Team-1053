@@ -37,7 +37,8 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Order.objects.all().order_by('-date_created')
-        if self.request.user.is_staff is False:
+        print('balalala', self.request.user.is_staff)
+        if self.request.user.is_staff is not True:
             customer = Customer.objects.get(user=self.request.user)
             queryset = Order.objects.filter(
                 customer=customer).order_by('-date_created')
@@ -65,13 +66,17 @@ def order_history(request, orderId):
 @permission_classes([IsAuthenticated])
 def order_summary(request):
     try:
-        queryset = Order.objects.order_by('-date_created')
+        queryset = Order.objects.all().order_by('-date_created')
+        if request.user.is_staff is False:
+            customer = Customer.objects.get(user=request.user)
+            queryset = Order.objects.filter(
+                    customer=customer).order_by('-date_created')
         serializer = OrderSerializer(queryset, many=True)
         summary_data = get_order_summary(serializer.data)
         return Response(summary_data)
 
-    except Exception as e:
-        print(e)
+    except Customer.DoesNotExist:
         return Response(
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            {'error': 'Customer does not exist'},
+            status=status.HTTP_404_NOT_FOUND
         )

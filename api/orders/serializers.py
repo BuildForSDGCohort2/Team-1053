@@ -59,7 +59,6 @@ class OrderSerializer(serializers.ModelSerializer):
 
         total = 0
         items = order.orderitem_set.all()
-        print(items)
         for item in items:
             total += item.cost
         return total
@@ -69,10 +68,12 @@ class OrderSerializer(serializers.ModelSerializer):
         Query and returns the first and last
         name of the customer the order belongs to.
         """
-
-        customer = Customer.objects.get(id=obj.customer_id)
-        return f'{customer.user.first_name} {customer.user.last_name}'
-
+        try:
+            customer = Customer.objects.get(id=obj.customer_id)
+            return f'{customer.user.first_name} {customer.user.last_name}'
+        except Customer.DoesNotExist:
+            return None
+        
 
 class TrackingSerializer(serializers.ModelSerializer):
     ship_to = serializers.SerializerMethodField()
@@ -86,6 +87,8 @@ class TrackingSerializer(serializers.ModelSerializer):
         Query and returns the details of customer the
         order being tracked belongs to.
         """
-
-        customer = Customer.objects.get(username=obj.ship_to)
-        return CustomerSerializer(customer).data
+        try:
+            customer = Customer.objects.get(pk=obj.ship_to)
+            return CustomerSerializer(customer).data
+        except Customer.DoesNotExist:
+            return None
